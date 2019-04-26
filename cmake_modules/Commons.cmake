@@ -24,6 +24,8 @@ macro(set_common_cxx_flags_for_sparta)
     endif ()
 endmacro()
 
+set(SPARTA_COMMON_DIR ${CMAKE_CURRENT_LIST_DIR})
+
 macro(add_dependent_packages_for_sparta)
     find_package(Boost 1.58.0 REQUIRED COMPONENTS thread)
     print_dirs("${Boost_INCLUDE_DIRS}" "Boost_INCLUDE_DIRS")
@@ -33,10 +35,10 @@ macro(add_dependent_packages_for_sparta)
     set(Boost_USE_STATIC_RUNTIME ON)
     set(Boost_USE_MULTITHREADED ON)
 
-    project(googletest-download NONE)
+    # project(googletest-download NONE)
 
     # Download and unpack googletest at configure time
-    configure_file(cmake_modules/gtest.cmake.in googletest-download/CMakeLists.txt)
+    configure_file(${SPARTA_COMMON_DIR}/gtest.cmake.in googletest-download/CMakeLists.txt)
     execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
       RESULT_VARIABLE result
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
